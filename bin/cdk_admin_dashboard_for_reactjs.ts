@@ -1,10 +1,11 @@
 #!/usr/bin/env node
+import { CicdReactAdminDashboardPipelineStack } from './../lib/CicdAWSPipelineStack';
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
 import { CdkAdminDashboardForReactjsStack } from '../lib/cdk_admin_dashboard_for_reactjs-stack';
 
 const app = new cdk.App();
-new CdkAdminDashboardForReactjsStack(app, 'CdkAdminDashboardForReactjsStack', {
+const pipelineStack = new CicdReactAdminDashboardPipelineStack(app, 'CicdReactAdminDashboardPipelineStack', {
   /* If you don't specify 'env', this stack will be environment-agnostic.
    * Account/Region-dependent features and context lookups will not work,
    * but a single synthesized template can be deployed anywhere. */
@@ -19,3 +20,5 @@ new CdkAdminDashboardForReactjsStack(app, 'CdkAdminDashboardForReactjsStack', {
 
   /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
 });
+
+const serviceStackProd = new CdkAdminDashboardForReactjsStack(app, "CdkAdminDashboardForReactjsStack");
