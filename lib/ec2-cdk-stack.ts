@@ -87,7 +87,7 @@ export class Ec2CdkStack extends cdk.Stack {
     const userData1 = ec2.UserData.forLinux();
 
     var bootscript:string;
-    bootscript = fs.readFileSync('src/config.sh','utf8');
+    bootscript = fs.readFileSync('lib/src/config.sh','utf8');
 
     
     
