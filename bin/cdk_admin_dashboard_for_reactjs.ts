@@ -3,6 +3,7 @@ import { CicdReactAdminDashboardPipelineStack } from './../lib/CicdAWSPipelineSt
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
 import { CdkAdminDashboardForReactjsStack } from '../lib/cdk_admin_dashboard_for_reactjs-stack';
+import { Ec2CdkStack } from '../lib/ec2-cdk-stack';
 
 const app = new cdk.App();
 const pipelineStack = new CicdReactAdminDashboardPipelineStack(app, 'CicdReactAdminDashboardPipelineStack', {
@@ -21,4 +22,4 @@ const pipelineStack = new CicdReactAdminDashboardPipelineStack(app, 'CicdReactAd
   /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
 });
 
-const serviceStackProd = new CdkAdminDashboardForReactjsStack(app, "CdkAdminDashboardForReactjsStack");
+const serviceStackProd = new Ec2CdkStack(app, "CdkAdminDashboardForReactjsStack");

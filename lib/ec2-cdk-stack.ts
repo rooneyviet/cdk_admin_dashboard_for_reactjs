@@ -9,6 +9,8 @@ import { ApplicationLoadBalancer, ApplicationProtocol, ListenerCertificate, SslP
 import { AutoScalingGroup, HealthCheck } from "aws-cdk-lib/aws-autoscaling";
 
 import * as fs from 'fs';
+import { ARecord, HostedZone, RecordTarget } from "aws-cdk-lib/aws-route53";
+import { LoadBalancerTarget } from "aws-cdk-lib/aws-route53-targets";
 interface ICdkEc2Props {
     //CertificateArn: string;
     //InstanceIAMRoleArn: string;
@@ -18,12 +20,17 @@ interface ICdkEc2Props {
     //HealthCheckHttpCodes: string;
   }
 
+  const env = {
+    region: process.env.CDK_DEFAULT_REGION,
+    account: process.env.CDK_DEFAULT_ACCOUNT
+  };
+  
 export class Ec2CdkStack extends cdk.Stack {
 
     readonly loadBalancer: ApplicationLoadBalancer
-  constructor(scope: Construct, id: string, props: ICdkEc2Props) {
-    super(scope, id);
-
+  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+    //super(scope, id);
+    super(scope, id, props ? props : { env });
     // Create a Key Pair to be used with this EC2 Instance
     // Temporarily disabled since `cdk-ec2-key-pair` is not yet CDK v2 compatible
     // const key = new KeyPair(this, 'KeyPair', {
@@ -116,6 +123,17 @@ export class Ec2CdkStack extends cdk.Stack {
           port: "80",
           healthyHttpCodes: "200"
         }
+      })
+
+
+      const route53_hosted_zone = HostedZone.fromLookup(this, 'MyZone', {
+        domainName: 'kakiandmai.com'
+      })
+  
+      new ARecord(this, 'AliasRecord', {
+        zone: route53_hosted_zone,
+        target: RecordTarget.fromAlias(new LoadBalancerTarget(this.loadBalancer)),
+        recordName: 'dashboardreact.kakiandmai.com'
       })
 
     
