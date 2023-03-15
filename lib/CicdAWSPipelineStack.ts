@@ -134,6 +134,7 @@ export class CicdReactAdminDashboardPipelineStack extends Stack {
         desiredCapacity:1,
         //healthCheck: HealthCheck.ec2(),
         associatePublicIpAddress: true,
+        keyName: "barney_key",
         //userData: userData1,
         vpcSubnets: { subnetType: ec2.SubnetType.PUBLIC },
       });
