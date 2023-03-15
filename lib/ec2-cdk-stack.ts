@@ -103,6 +103,7 @@ export class Ec2CdkStack extends cdk.Stack {
         maxCapacity:1,
         desiredCapacity:1,
         healthCheck: HealthCheck.ec2(),
+        associatePublicIpAddress: true,
         userData: userData1,
         vpcSubnets: { subnetType: ec2.SubnetType.PUBLIC },
       });
