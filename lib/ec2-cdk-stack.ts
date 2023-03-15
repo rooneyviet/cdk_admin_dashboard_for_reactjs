@@ -104,8 +104,9 @@ export class Ec2CdkStack extends cdk.Stack {
         machineImage: new ec2.AmazonLinuxImage(), 
         allowAllOutbound: true,
         role: role,
-        minCapacity:1,
+        minCapacity:0,
         maxCapacity:1,
+        desiredCapacity:1,
         healthCheck: HealthCheck.ec2(),
         userData: userData1
       });
